@@ -6,6 +6,12 @@ import dummySkills from "#/lib/skills";
 export const Route = createFileRoute("/")({ component: Home });
 
 function Home() {
+	const recentSkills = [...dummySkills].sort(
+		(a, b) =>
+			(b.createdAt ? Date.parse(b.createdAt) : 0) -
+			(a.createdAt ? Date.parse(a.createdAt) : 0),
+	);
+
 	return (
 		<div id="home">
 			<section className="hero">
@@ -44,9 +50,9 @@ function Home() {
 				</div>
 
 				<div>
-					{dummySkills.length > 0 ? (
+					{recentSkills.length > 0 ? (
 						<div className="skills-grid">
-							{dummySkills.map((skill) => (
+							{recentSkills.map((skill) => (
 								<SkillCard key={skill.id} {...skill} />
 							))}
 						</div>
