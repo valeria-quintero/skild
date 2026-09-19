@@ -1,3 +1,4 @@
+import { usePostHog } from "@posthog/react";
 import { Link } from "@tanstack/react-router";
 import {
 	ArrowBigUp,
@@ -12,26 +13,37 @@ import { useState } from "react";
 const SkillCard = ({
 	authorEmail,
 	category,
+	id,
 	createdAt,
 	description,
 	installCommand,
 	tags,
 	title,
 }: SkillRecord) => {
+	const posthog = usePostHog();
 	const [copied, setCopied] = useState(false);
-	const authorLabel = authorEmail?.trim() || "Unknown author";
-	const createdDateLabel = createdAt
-		? new Date(createdAt).toLocaleDateString()
-		: "No date provided";
 
 	const handleCopy = async () => {
 		try {
 			await navigator.clipboard.writeText(installCommand);
 			setCopied(true);
+			posthog.capture("skill_install_command_copied", {
+				skill_id: id,
+				skill_category: category,
+			});
 			window.setTimeout(() => setCopied(false), 1200);
-		} catch {
+		} catch (error) {
 			setCopied(false);
+			posthog.captureException(error);
 		}
+	};
+
+	const handleSkillOpen = (surface: "card" | "title" | "footer") => {
+		posthog.capture("skill_opened", {
+			skill_id: id,
+			skill_category: category,
+			surface,
+		});
 	};
 
 	return (
@@ -39,6 +51,7 @@ const SkillCard = ({
 			<Link
 				to="/skills"
 				tabIndex={-1}
+				onClick={() => handleSkillOpen("card")}
 				aria-label={`Open ${title}`}
 				className="overlay"
 			/>
@@ -71,7 +84,11 @@ const SkillCard = ({
 				</div>
 
 				<div className="summary">
-					<Link to="/skills" className="title-link">
+					<Link
+						to="/skills"
+						className="title-link"
+						onClick={() => handleSkillOpen("title")}
+					>
 						<h3>{title}</h3>
 					</Link>
 
@@ -107,7 +124,12 @@ const SkillCard = ({
 					</div>
 
 					<div className="actions">
-						<Link to="/skills" className="open" title={`Open ${title}`}>
+						<Link
+							to="/skills"
+							className="open"
+							title={`Open ${title}`}
+							onClick={() => handleSkillOpen("footer")}
+						>
 							<span>Open</span>
 							<ArrowUpRight size={14} />
 						</Link>

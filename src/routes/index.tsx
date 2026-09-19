@@ -1,5 +1,6 @@
+import { usePostHog } from "@posthog/react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Divide, Terminal } from "lucide-react";
+import { Terminal } from "lucide-react";
 import SkillCard from "#/components/SkillCard";
 import dummySkills from "#/lib/skills";
 
@@ -7,6 +8,7 @@ export const Route = createFileRoute("/")({ component: Home });
 
 /** Renders the registry landing page and its latest skills. */
 function Home() {
+	const posthog = usePostHog();
 	const recentSkills = [...dummySkills].sort(
 		(a, b) =>
 			(b.createdAt ? Date.parse(b.createdAt) : 0) -
@@ -29,11 +31,27 @@ function Home() {
 				</div>
 
 				<div className="actions">
-					<Link to="/skills" className="btn-primary">
+					<Link
+						to="/skills"
+						className="btn-primary"
+						onClick={() =>
+							posthog.capture("registry_browse_clicked", {
+								source: "home_hero",
+							})
+						}
+					>
 						<Terminal size={18} />
 						<span>Browse Registry</span>
 					</Link>
-					<Link to="/skills/new" className="btn-secondary">
+					<Link
+						to="/skills/new"
+						className="btn-secondary"
+						onClick={() =>
+							posthog.capture("skill_publish_started", {
+								source: "home_hero",
+							})
+						}
+					>
 						Publish Skill
 					</Link>
 				</div>
