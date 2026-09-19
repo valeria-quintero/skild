@@ -3,6 +3,7 @@ import type { QueryClient } from "@tanstack/react-query";
 import {
 	createRootRouteWithContext,
 	HeadContent,
+	Link,
 	Scripts,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
@@ -43,7 +44,28 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 		],
 	}),
 	shellComponent: RootDocument,
+	notFoundComponent: NotFound,
 });
+
+function NotFound() {
+	return (
+		<div
+			id="not-found"
+			className="flex flex-col items-center gap-6 px-4 text-center"
+		>
+			<h1 className="text-4xl font-bold tracking-tighter text-black dark:text-white md:text-6xl">
+				Page <span className="text-gradient">not found</span>
+			</h1>
+			<p className="max-w-xl text-text-muted md:text-lg">
+				This page does not exist. Return to the registry to keep exploring
+				skills.
+			</p>
+			<Link to="/" className="btn-primary">
+				Back to home
+			</Link>
+		</div>
+	);
+}
 
 function RootDocument({ children }: { children: React.ReactNode }) {
 	return (
