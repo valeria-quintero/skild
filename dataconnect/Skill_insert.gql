@@ -1,0 +1,7 @@
+# This is a file for you to write an un-named mutation. 
+# Only one un-named mutation is allowed per file.
+mutation {
+  skill_insert(
+    data: {id: "11111111222233334444555555555551", authorClerkId: "user_3JWkItfxp9lYhDVRpU72bRYOlSA", createdAt: "2026-09-19T17:44:22.281Z", description: "Reusable hooks and utilities for caching, loading, and syncing remote data.", installCommand: "npm install @tanstack/react-query", promptConfig: "You are a professional performance optimization engineer", tags: ["ai-agent", "engineering"], title: "Performance Tuner", usageExample: "Review the code and optimize it"}
+  )
+}
