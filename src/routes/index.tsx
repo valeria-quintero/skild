@@ -37,10 +37,7 @@ function Home() {
 					<h2>
 						Recently Created <span className="text-gradient">Skills</span>
 					</h2>
-					<p>
-						{" "}
-						Latest skills loaded from Firestore un desceding creation order.
-					</p>
+					<p> Latest sample skills in descending creation order. </p>
 				</div>
 
 				<div>
