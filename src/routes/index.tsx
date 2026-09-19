@@ -5,6 +5,7 @@ import dummySkills from "#/lib/skills";
 
 export const Route = createFileRoute("/")({ component: Home });
 
+/** Renders the registry landing page and its latest skills. */
 function Home() {
 	const recentSkills = [...dummySkills].sort(
 		(a, b) =>
