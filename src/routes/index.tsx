@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Divide, Terminal } from "lucide-react";
+import { Terminal } from "lucide-react";
 import SkillCard from "#/components/SkillCard";
 import dummySkills from "#/lib/skills";
 
