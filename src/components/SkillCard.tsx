@@ -19,6 +19,10 @@ const SkillCard = ({
 	title,
 }: SkillRecord) => {
 	const [copied, setCopied] = useState(false);
+	const authorLabel = authorEmail?.trim() || "Unknown author";
+	const createdDateLabel = createdAt
+		? new Date(createdAt).toLocaleDateString()
+		: "No date provided";
 
 	const handleCopy = async () => {
 		try {
@@ -55,8 +59,8 @@ const SkillCard = ({
 					<div className="author">
 						<img src="/logo512.png" alt="author avatar" className="avatar" />
 						<div className="author-copy">
-							<p>Valeria</p>
-							<p>{new Date(createdAt as string).toLocaleDateString()}</p>
+							<p>{authorLabel}</p>
+							<p>{createdDateLabel}</p>
 						</div>
 					</div>
 					<p className="category">{category}</p>
